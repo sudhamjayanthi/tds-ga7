@@ -14,9 +14,6 @@ average_score = df['Patient Satisfaction Score'].mean()
 industry_target = 4.5
 
 # --- Verification ---
-# This print statement will confirm the calculated average.
-# The user-provided average is 2.68, and the calculated average is 2.675.
-# This is a good place to confirm the value.
 print(f"Calculated Average Patient Satisfaction Score: {average_score:.2f}")
 
 # --- Visualization ---

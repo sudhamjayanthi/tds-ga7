@@ -1,14 +1,20 @@
 # Advanced Data Visualization: Treemap
-# Healthcare Performance Analysis: A Data-Driven Approach to Improving Patient Satisfaction
 
 **Email:** 23f3003060@ds.study.iitm.ac.in
-**Contact Email:** 23f3003060@ds.study.iitm.ac.in
 
 This directory contains a publication-ready Treemap visualization generated with RAWGraphs, based on realistic business data for portfolio analysis and resource allocation.
-## 1. Business Challenge
 
 - `chart.png`: Treemap visualization (300–512px, PNG)
 - Data: Hierarchical dataset (categories, subcategories, market values)
+
+---
+
+# Healthcare Performance Analysis: A Data-Driven Approach to Improving Patient Satisfaction
+
+**Contact Email:** 23f3003060@ds.study.iitm.ac.in
+
+## 1. Business Challenge
+
 Our organization is currently facing a critical challenge with patient satisfaction. The average patient satisfaction score for 2024 is **2.68**, which is significantly below the industry benchmark of **4.5**. This trend not only affects our reputation but also has substantial financial and operational implications. Urgent, data-driven action is required to identify the root causes and implement effective solutions to elevate the patient experience.
 
 ## 2. Data Analysis & Key Findings
