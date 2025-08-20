@@ -46,10 +46,10 @@ plt.xticks(rotation=45, ha="right", fontsize=8)
 plt.yticks(rotation=0, fontsize=8)
 
 # Adjust layout to prevent cutoff
-plt.subplots_adjust(top=0.9, bottom=0.2, left=0.2, right=0.9)
+plt.subplots_adjust(top=0.88, bottom=0.15, left=0.15, right=0.92)
 
 # Save chart as exactly 512x512 pixels
 plt.savefig(
-    "q5/chart.png", dpi=100, bbox_inches="tight", facecolor="white", edgecolor="none"
+    "q5/chart.png", dpi=100, bbox_inches=None, facecolor="white", edgecolor="none"
 )
 plt.close()
