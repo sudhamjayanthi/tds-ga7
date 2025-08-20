@@ -49,21 +49,19 @@
                     </aside>
                 </section>
 
-                <section>
-                    <h2>Code Sample</h2>
-                    <pre><code class="python" data-line-numbers="1-5|7-11">
-						import pandas as pd
+               <section>
+                    <section>
+                        <pre><code class="python" data-line-numbers="1-2|4,6-7|9">
+                    import pandas as pd
+                    import seaborn as sns
 
-						def calculate_profit(revenue, costs):
-							return revenue - costs
+                    # Load data
+                    data = pd.read_csv('data.csv')
 
-						revenue = 1000000
-						costs = 750000
-
-						profit = calculate_profit(revenue, costs)
-						print(f"Profit: ${profit}")
-					</code></pre>
-                </section>
+                    # Create visualization
+                    sns.scatterplot(data=data, x='x', y='y')
+                    </code></pre>
+                    </section>
 
                 <section>
                     <h2>Financial Formulas</h2>
