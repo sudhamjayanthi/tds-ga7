@@ -53,3 +53,5 @@ To address these challenges and achieve our target score of 4.5, a focused effor
     - **Goal:** Decrease the average time for patient check-in and check-out by 50%.
 
 By implementing these targeted strategies, we can build on the positive momentum from Q4 and create a consistently exceptional patient experience, ultimately achieving and surpassing the industry benchmark.
+
+Finalised!!
