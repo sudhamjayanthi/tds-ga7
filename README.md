@@ -1,6 +1,6 @@
-# Healthcare Performance Analysis: A Data-Driven Approach to Improving Patient Satisfaction
+# Advanced Data Visualization: Treemap
 
-**Contact Email:** 23f3003060@ds.study.iitm.ac.in
+**Email:** 23f3003060@ds.study.iitm.ac.in
 
 ## 1. Business Challenge
 
