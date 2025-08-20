@@ -1,114 +1,150 @@
 import marimo
 
-__generated_with = "0.14.17"
+__generated_with = "0.8.15"
 app = marimo.App(width="medium")
 
 
 @app.cell
-def _():
-    # Cell 1: Import marimo UI module and data analysis libraries
-    # Outputs: mo (marimo module for UI components), np, pd
-    # Data flow: This cell provides foundational modules for subsequent cells
+def __():
+    # Author email: 23f3003060@ds.study.iitm.ac.in
+    # Cell 1: Define the base dataset for analysis
+    # This cell creates the primary data that will flow to other cells
+    import pandas as pd
     import marimo as mo
     import numpy as np
-    import pandas as pd
-    return mo, np, pd
+
+    # Create sample dataset with research metrics
+    data_df = pd.DataFrame(
+        {
+            "sample_id": range(1, 21),
+            "temperature": np.random.normal(25, 5, 20),
+            "pressure": np.random.normal(1013, 50, 20),
+            "efficiency": np.random.uniform(0.3, 0.9, 20),
+        }
+    )
+
+    mo.md("## Interactive Data Analysis Dashboard")
+    return data_df, mo, pd, np
 
 
 @app.cell
-def _(mo, np):
-    # Cell 2: Generate sample dataset for analysis
-    # Inputs: mo, np, pd (from Cell 1)
-    # Outputs: df (DataFrame with sample data), sample_size_slider (interactive widget)
-    # Data flow: np.random -> DataFrame creation -> slider widget for sample size control
-    np.random.seed(42)
+def __(mo):
+    # Cell 2: Interactive slider widget for threshold selection
+    # This cell defines the control parameter that affects downstream analysis
+    threshold_slider = mo.ui.slider(
+        start=0.0, stop=1.0, step=0.1, value=0.5, label="Efficiency Threshold"
+    )
 
-    # Interactive slider to control sample size
-    sample_size_slider = mo.ui.slider(10, 1000, value=100, label="Sample Size")
-
-
-    return (sample_size_slider,)
+    mo.md(f"**Control Panel:** Adjust the efficiency threshold to filter data")
+    return (threshold_slider,)
 
 
 @app.cell
-def _(np, pd, sample_size_slider):
-    # Generate sample dataset based on slider value
-    n = sample_size_slider.value
-    df = pd.DataFrame({
-        'x': np.random.normal(0, 1, n),
-        'y': np.random.normal(0, 1, n),
-        'category': np.random.choice(['A', 'B', 'C'], n)
-    })
-
-    return (df,)
+def __(mo, threshold_slider):
+    # Display the slider widget
+    threshold_slider
 
 
 @app.cell
-def _(df, mo):
-    # Cell 3: Calculate correlation and create interactive analysis
-    # Inputs: mo (from Cell 1), df, sample_size_slider (from Cell 2)
-    # Outputs: correlation_slider (threshold control), analysis display
-    # Data flow: df -> correlation calculation -> threshold slider -> filtered results -> markdown output
+def __(data_df, threshold_slider):
+    # Cell 3: Filter and process data based on slider value
+    # Data flow: This cell depends on data_df (Cell 1) and threshold_slider (Cell 2)
+    # When slider changes, this cell automatically re-executes due to reactive dependencies
 
-    # Interactive slider for correlation threshold
-    correlation_slider = mo.ui.slider(0.0, 1.0, step=0.1, value=0.3, label="Correlation Threshold")
+    # Filter data based on efficiency threshold
+    filtered_df = data_df[data_df["efficiency"] >= threshold_slider.value]
 
-    # Calculate correlation between x and y
-    correlation = df['x'].corr(df['y'])
+    # Calculate summary statistics for filtered data
+    summary_stats = {
+        "count": len(filtered_df),
+        "avg_temp": filtered_df["temperature"].mean() if len(filtered_df) > 0 else 0,
+        "avg_pressure": filtered_df["pressure"].mean() if len(filtered_df) > 0 else 0,
+        "avg_efficiency": filtered_df["efficiency"].mean()
+        if len(filtered_df) > 0
+        else 0,
+    }
 
-    return correlation, correlation_slider
+    return filtered_df, summary_stats
 
 
 @app.cell
-def _(correlation, correlation_slider, df, mo, sample_size_slider):
-    # Cell 4: Generate dynamic markdown report
-    # Inputs: mo (from Cell 1), df, sample_size_slider (from Cell 2), correlation_slider, correlation (from Cell 3)
-    # Outputs: Interactive markdown display with analysis results
-    # Data flow: All previous cell outputs -> conditional analysis -> formatted markdown display
+def __(mo, threshold_slider, filtered_df, summary_stats, data_df):
+    # Cell 4: Dynamic markdown output based on widget state and processed data
+    # Data flow: This cell depends on all previous cells and updates reactively
+    # When threshold_slider changes -> filtered_df changes -> this output updates
 
-    # Determine if correlation exceeds threshold
-    exceeds_threshold = abs(correlation) > correlation_slider.value
+    percentage_remaining = (
+        (len(filtered_df) / len(data_df)) * 100 if len(data_df) > 0 else 0
+    )
 
-    # Create dynamic visualization indicators
-    status_indicator = "🟢" if exceeds_threshold else "🔴"
-    strength_bars = "📊" * int(abs(correlation) * 10)
-
-    # Generate comprehensive analysis report
     mo.md(f"""
-    ## Interactive Data Analysis Report
-
-    **Dataset Configuration:**
-    {sample_size_slider}
-
-    **Correlation Analysis:**
-    {correlation_slider}
-
-    **Results:**
-    - Sample Size: {len(df)} observations
-    - X-Y Correlation: {correlation:.3f} {status_indicator}
-    - Correlation Strength: {strength_bars}
-    - Threshold Status: {'✅ Exceeds' if exceeds_threshold else '❌ Below'} threshold
-
-    **Data Summary:**
-    - Categories: {df['category'].value_counts().to_dict()}
-    - X mean: {df['x'].mean():.3f}, Y mean: {df['y'].mean():.3f}
+    ### Research Data Analysis Results
+    
+    **Current Filter Settings:**
+    - Efficiency Threshold: **{threshold_slider.value:.1f}**
+    
+    **Filtered Dataset Statistics:**
+    - Samples meeting criteria: **{summary_stats["count"]} / {len(data_df)}** ({percentage_remaining:.1f}%)
+    - Average Temperature: **{summary_stats["avg_temp"]:.2f}°C**
+    - Average Pressure: **{summary_stats["avg_pressure"]:.2f} hPa**
+    - Average Efficiency: **{summary_stats["avg_efficiency"]:.3f}**
+    
+    **Data Flow Documentation:**
+    - Cell 1 → Cell 3: Raw dataset (`data_df`) flows to filtering operation
+    - Cell 2 → Cell 3: Slider value (`threshold_slider.value`) controls filter criteria  
+    - Cell 3 → Cell 4: Processed data (`filtered_df`, `summary_stats`) flows to display
+    - Interactive updates: Moving slider triggers reactive execution of Cells 3 & 4
     """)
+
+
+@app.cell
+def __(mo, filtered_df):
+    # Cell 5: Display the filtered data table
+    # Data flow: Depends on filtered_df from Cell 3
+    mo.md("### Filtered Data Sample")
     return
 
 
 @app.cell
-def _():
-    # Cell 5: Email identifier and data flow documentation
-    # Inputs: None
-    # Outputs: None
-    # Email: 23f3003060@ds.study.iitm.ac.in
-    # 
-    # Data Flow Summary:
-    # Cell 1 → Cell 2: mo, np, pd modules
-    # Cell 2 → Cell 3: df (dataset), sample_size_slider
-    # Cell 3 → Cell 4: correlation_slider, correlation value
-    # Cell 4: Consumes all outputs to generate interactive analysis report
-    return
+def __(filtered_df):
+    # Show first few rows of filtered data
+    #
+    # DATA FLOW GRAPH (ASCII Representation):
+    # =============================================
+    #
+    #     Cell 1                    Cell 2
+    #  ┌──────────────┐          ┌──────────────────┐
+    #  │   data_df    │          │ threshold_slider │
+    #  │     mo       │────┐     │                  │
+    #  │     pd       │    │     └──────────────────┘
+    #  │     np       │    │              │
+    #  └──────────────┘    │              │
+    #           │          │              │
+    #           │          │              │
+    #           ▼          ▼              ▼
+    #        Cell 3 ◄──────────────────────┘
+    #  ┌──────────────────────┐
+    #  │    filtered_df       │
+    #  │   summary_stats      │
+    #  └──────────────────────┘
+    #           │         │
+    #           │         │
+    #           ▼         ▼
+    #       Cell 4    Cell 5 & 6
+    #  ┌─────────────┐ ┌──────────────┐
+    #  │  Dynamic    │ │  Data Table  │
+    #  │  Markdown   │ │   Display    │
+    #  │  Summary    │ │              │
+    #  └─────────────┘ └──────────────┘
+    #
+    # Reactive Flow:
+    # - When slider moves → Cell 2 updates → Cell 3 re-runs → Cells 4,5,6 update
+    # - All dependencies automatically tracked by Marimo's dataflow graph
+    # - No hidden state or execution order dependencies
+    #
+    filtered_df.head() if len(
+        filtered_df
+    ) > 0 else "No data meets the current threshold criteria"
 
 
 if __name__ == "__main__":
