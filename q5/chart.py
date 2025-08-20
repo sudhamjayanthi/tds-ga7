@@ -27,4 +27,5 @@ heatmap = sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f")
 plt.title("Customer Engagement Correlation Matrix")
 
 # Save chart
-plt.savefig("q5/chart.png", dpi=64, bbox_inches="tight")
+plt.gcf().set_size_inches(512/plt.gcf().dpi, 512/plt.gcf().dpi)
+plt.savefig("q5/chart.png", dpi=plt.gcf().dpi, bbox_inches="tight")
