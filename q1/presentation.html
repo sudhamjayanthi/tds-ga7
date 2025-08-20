@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Quarterly Earnings Report</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+    </head>
+
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>Quarterly Earnings Report</h1>
+                    <p>Technical Consultant Presentation</p>
+                    <p><a href="mailto:23f3003060@ds.study.iitm.ac.in">23f3003060@ds.study.iitm.ac.in</a></p>
+                </section>
+
+                <section data-markdown>
+                    <textarea data-template>
+						## Agenda
+						- Financial Highlights
+						- Key Metrics
+						- Code Implementation
+						- Projections
+					</textarea>
+                </section>
+
+                <section>
+                    <h2>Financial Highlights</h2>
+                    <ul>
+                        <li class="fragment">Revenue Growth: +15% YoY</li>
+                        <li class="fragment">Net Profit: $2.5M</li>
+                        <li class="fragment">EPS: $1.25</li>
+                    </ul>
+                    <aside class="notes">
+                        Here are the key financial takeaways for this quarter. Emphasize the strong year-over-year
+                        revenue growth.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Code Sample</h2>
+                    <pre><code data-line-numbers="1-5|7-11">
+						import pandas as pd
+
+						def calculate_profit(revenue, costs):
+							return revenue - costs
+
+						revenue = 1000000
+						costs = 750000
+
+						profit = calculate_profit(revenue, costs)
+						print(f"Profit: ${profit}")
+					</code></pre>
+                </section>
+
+                <section>
+                    <h2>Financial Formulas</h2>
+                    <p>Net Profit Margin:</p>
+                    \[ \text{Net Profit Margin} = \frac{\text{Net Profit}}{\text{Revenue}} \times 100\% \]
+                </section>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/math/math.min.js"></script>
+        <script>
+            Reveal.initialize({
+                hash: true,
+                plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX]
+            });
+        </script>
+    </body>
+
+</html>
